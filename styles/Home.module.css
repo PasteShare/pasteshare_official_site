@@ -1,15 +1,34 @@
+.filter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; /* fixed 定位覆盖页面 */
+  z-index: 9999; /* 层叠放到很高的一个位置，盖在页面上 */
+  mix-blend-mode: difference; /* 混合模式，反色 */
+  background-color: #fff; /* 结合混合模式做反色处理的对比色 */
+  pointer-events: none; /* 作为一个层覆盖在元素上，但不能妨碍页面元素点击，添加一个穿透效果 */
+}
 .container {
   min-height: 100vh;
-  padding: 0 0.5rem;
+  padding: 0 1rem;
   display: flex;
+  flex: 1;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+@media (prefers-color-scheme: dark) {
+  .article {
+    background:#000;
+    color: white;
+  }
 }
 
 .main {
   padding: 5rem 0;
   flex: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,6 +79,7 @@
 .description {
   line-height: 1.5;
   font-size: 1.5rem;
+  white-space: pre-line;
 }
 
 .code {
@@ -77,13 +97,25 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+  min-width: 800px;
   margin-top: 3rem;
 }
-
+.cardContainer {
+  display: flex;
+  /* margin: 1rem; */
+  /* align-items: center; */
+  flex-basis: 25%;
+  padding: 1.0rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  flex-direction: column;
+}
 .card {
-  margin: 1rem;
-  flex-basis: 45%;
-  padding: 1.5rem;
+  display: flex;
+  /* margin: 1rem; */
+  align-items: center;
+  padding: 1.0rem;
   text-align: left;
   color: inherit;
   text-decoration: none;
@@ -93,15 +125,27 @@
 }
 
 .card:hover,
-.card:focus,
+/* .card:focus, */
 .card:active {
   color: #0070f3;
   border-color: #0070f3;
 }
 
+.cardContainer a {
+  margin: 0.5rem 0 0 0;
+}
+
+.cardContainer a:hover,
+.cardContainer a:focus,
+.cardContainer a:active {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
 .card h3 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
+  margin: 0rem 0 0 0;
+  font-size: 1.2rem;
+  font-weight: normal;
 }
 
 .card p {
@@ -117,6 +161,27 @@
 @media (max-width: 600px) {
   .grid {
     width: 100%;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 375px;
+    min-width: 343px;
+  }
+  .title {
+    font-size: 1.8rem;
+    margin: 1rem 0rem 0 0rem;
+  }
+  .description {
+    margin: 1rem 0rem 0 0rem;
+    line-height: 1.5;
+    font-size: 1rem;
+    white-space: pre-line;
+  }
+  .cardContainer {
+    flex-basis: 50%;
+    padding: 0.5rem;
+  }
+  .card {
+    padding: 0.5rem;
   }
 }

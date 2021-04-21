@@ -1,52 +1,109 @@
 import Head from 'next/head'
+import Image from 'next/image'
+import { useRouter } from 'next/router'
 import styles from '../styles/Home.module.css'
 
-export default function Home() {
+export async function getStaticProps({ locale }) {
+  // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  // const res = await fetch(`https://.../posts?locale=${locale}`)
+  // const posts = await res.json()
+
+  // if (posts.length === 0) {
+  //   return {
+  //     notFound: true,
+  //   }
+  // }
+
+  // By returning { props: posts }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+      locale,
+    },
+  }
+}
+
+export default function Home(props) {
+  const isZh = props.locale == "zh";
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>{isZh ? "粘贴分享-跨平台局域网剪切板工具" : "PasteShare - Cross Platform Clipboard on LAN" }</title>
+        <meta name="description" content="Exchange files and texts between devices on same wifi." />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      {/*<div className={styles.filter} />*/}
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          {isZh ? "欢迎使用 " : "Welcome to "}<a href="">{isZh ? "粘贴分享 " : "PasteShare"}</a>
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
+        {isZh ? "跨平台的，安全的局域网剪切板工具" : 'Exchange files and texts between devices on same wifi.\nYou can start PasteShare after copying the text. \n "Share files To PasteShare" in other App.'}{' '}
+          {/* <code className={styles.code}>pages/index.js</code> */}
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          <div className={styles.cardContainer}>
+            <a href="https://play.google.com/store/apps/details?id=com.liuxuanping.local_area_network" className={styles.card}>
+              <Image alt="google play" src="/images/google-play.svg" style={{ width: "2rem", height: "2rem" }} />
+              <div>
+                <span style={{fontSize:"0.8rem"}}>GET IT ON</span>
+                <h3 style={{ flex: 1 }}>Google Play</h3>
+              </div>
+            </a>
+            <span style={{ textAlign: 'right', margin: "10px 10px 0 0", fontSize: "0.8rem", color: "#666666" }}>Version: 1.0.1</span>
+            <span style={{ textAlign: 'right', margin: "0px 10px", fontSize: "0.8rem", color: "#666666" }}>Date: 2021.04.10</span>
+            <a style={{ textDecoration: "underline" }} href="/Android/app-arm64-v8a-release.apk">Download apk</a>
+          </div>
+          <div className={styles.cardContainer}>
+            <a href="https://apps.apple.com/us/app/%E7%B2%98%E8%B4%B4%E5%88%86%E4%BA%AB/id1560446008" className={styles.card}>
+              <Image alt="apple app store" src="/images/apple.svg" style={{ width: "2rem", height: "2rem" }} />
+              <div>
+                <span style={{fontSize:"0.8rem"}}>Download on the</span>
+                <h3 style={{ flex: 1 }}>App Store</h3>
+              </div>
+            </a>
+            <span style={{ textAlign: 'right', margin: "10px 10px 0 0", fontSize: "0.8rem", color: "#666666" }}>Version: 1.0.0</span>
+            <span style={{ textAlign: 'right', margin: "0px 10px", fontSize: "0.8rem", color: "#666666" }}>Date: 2021.04.02</span>
+            <a style={{ textDecoration: "underline" }} href="https://testflight.apple.com/join/vzvzXODR">Download 1.0.1beta</a>
+          </div>
+          <div className={styles.cardContainer}>
+            <a
+              style={{  }}
+              className={styles.card}
+              onClick={() => {
+                location.href = "/Windows/PasteShare.zip";
+              }}
+            >
+              <Image alt="windows store" src="/images/windows.svg" style={{ margin: "0 0.4rem 0 0", width: "1.6rem", height: "1.6rem" }} />
+              <div>
+                <span style={{fontSize:"0.8rem"}}>Download from</span>
+                <h3 style={{ flex: 1 }}>Win Store</h3>
+              </div>
+            </a>
+            <span style={{ textAlign: 'right', margin: "10px 10px 0 0", fontSize: "0.8rem", color: "#666666" }}>Version: 1.0.1</span>
+            <span style={{ textAlign: 'right', margin: "0px 10px", fontSize: "0.8rem", color: "#666666" }}>Date: 2021.04.10</span>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+            <a href="/Windows/PasteShare.zip">download 1.0.1</a>
+          </div>
+          <div className={styles.cardContainer}>
+            <a
+              href="/Linux/PasteShare.zip"
+              className={styles.card}
+            >
+              <Image alt="ubuntu" src="/images/ubuntu.svg" style={{ margin: "0 0.4rem 0 0", width: "2rem", height: "2rem" }} />
+              <div>
+                <span style={{fontSize:"0.8rem"}}>Download for</span>
+                <h3 style={{ flex: 1 }}>Ubuntu</h3>
+              </div>
+            </a>
+            <span style={{ textAlign: 'right', margin: "10px 10px 0 0", fontSize: "0.8rem", color: "#666666" }}>Version: 1.0.1</span>
+            <span style={{ textAlign: 'right', margin: "0px 10px", fontSize: "0.8rem", color: "#666666" }}>Date: 2021.04.10</span>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+            <a >tested on 20.04 LTS</a>
+          </div>
         </div>
       </main>
 
@@ -56,8 +113,8 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          Xuanping 2021
+          <Image src="/favicon.ico" alt="Vercel Logo" className={styles.logo} />
         </a>
       </footer>
     </div>
