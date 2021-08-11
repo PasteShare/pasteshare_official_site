@@ -26,6 +26,11 @@ export async function getStaticProps({ locale }) {
 
 export default function Home(props) {
   const isZh = props.locale == "zh";
+  let isDarkMode = false;
+  if (typeof window !== "undefined") {
+    isDarkMode = window && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -47,7 +52,7 @@ export default function Home(props) {
         <div className={styles.grid}>
           <div className={styles.cardContainer}>
             <a href="https://play.google.com/store/apps/details?id=com.liuxuanping.local_area_network" className={styles.card}>
-              <Image alt="google play" src="/images/google-play.svg" style={{ width: "2rem", height: "2rem" }} />
+              <Image alt="google play" src="/images/google-play.svg" width={32} height={32} />
               <div>
                 <span style={{fontSize:"0.8rem"}}>GET IT ON</span>
                 <h3 style={{ flex: 1 }}>Google Play</h3>
@@ -59,7 +64,7 @@ export default function Home(props) {
           </div>
           <div className={styles.cardContainer}>
             <a href="https://apps.apple.com/us/app/%E7%B2%98%E8%B4%B4%E5%88%86%E4%BA%AB/id1560446008" className={styles.card}>
-              <Image alt="apple app store" src="/images/apple.svg" style={{ width: "2rem", height: "2rem" }} />
+              <Image src={isDarkMode ? "/images/apple-white.svg" : "/images/apple.svg"} alt="apple app store" width={32} height={32} />
               <div>
                 <span style={{fontSize:"0.8rem"}}>Download on the</span>
                 <h3 style={{ flex: 1 }}>App Store</h3>
@@ -77,8 +82,8 @@ export default function Home(props) {
                 location.href = "/Windows/PasteShare.zip";
               }}
             >
-              <Image alt="windows store" src="/images/windows.svg" style={{ margin: "0 0.4rem 0 0", width: "1.6rem", height: "1.6rem" }} />
-              <div>
+              <Image alt="windows store" src="/images/windows.svg" width={25.6} height={25.6} />
+              <div className={styles.winTitle}>
                 <span style={{fontSize:"0.8rem"}}>Download from</span>
                 <h3 style={{ flex: 1 }}>Win Store</h3>
               </div>
@@ -93,8 +98,8 @@ export default function Home(props) {
               href="/Linux/PasteShare.zip"
               className={styles.card}
             >
-              <Image alt="ubuntu" src="/images/ubuntu.svg" style={{ margin: "0 0.4rem 0 0", width: "2rem", height: "2rem" }} />
-              <div>
+              <Image alt="ubuntu" src="/images/ubuntu.svg" width={32} height={32} />
+              <div className={styles.winTitle}>
                 <span style={{fontSize:"0.8rem"}}>Download for</span>
                 <h3 style={{ flex: 1 }}>Ubuntu</h3>
               </div>
@@ -113,8 +118,8 @@ export default function Home(props) {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Xuanping 2021
-          <Image src="/favicon.ico" alt="Vercel Logo" className={styles.logo} />
+          <span style={{ margin: "0 0.4rem 0 0" }}>Xuanping 2021</span>
+          <Image src="/favicon.ico" alt="Vercel Logo" width={16} height={16} />
         </a>
       </footer>
     </div>
